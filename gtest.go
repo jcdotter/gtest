@@ -17,7 +17,7 @@ import (
 )
 
 const (
-	VERSION = "0.0.2"
+	VERSION = "0.0.3"
 )
 
 var (
@@ -130,4 +130,42 @@ func trace(i int) string {
 		return strings.Join(s, delim) + ` line ` + fmt.Sprint(ln)
 	}
 	return `unknown.source`
+}
+
+func PrintTable(data [][]string, header bool) {
+	var (
+		colDel  = " | "
+		rowDel  = "\n"
+		hColDel = "-+-"
+		hRowSpc = "-"
+		Space   = " "
+		t       = ""
+	)
+	size := make([]int, len(data[0]))
+	for i := range data {
+		for j := range data[i] {
+			if len(data[i][j]) > size[j] {
+				size[j] = len(data[i][j])
+			}
+		}
+	}
+	for i := range data {
+		if i == 1 && header {
+			for j := range data[i] {
+				if j > 0 {
+					t += hColDel
+				}
+				t += strings.Repeat(hRowSpc, size[j])
+			}
+			t += rowDel
+		}
+		for j := range data[i] {
+			if j > 0 {
+				t += colDel
+			}
+			t += data[i][j] + strings.Repeat(Space, size[j]-len(data[i][j]))
+		}
+		t += rowDel
+	}
+	fmt.Print(t)
 }

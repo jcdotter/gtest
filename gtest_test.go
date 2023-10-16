@@ -18,3 +18,12 @@ func TestAll(t *testing.T) {
 	gt.True(true, "true is true")
 	gt.False(false, "false is false")
 }
+
+func TestTable(t *testing.T) {
+	data := [][]string{
+		{"Col1", "Col2", "Col3"},
+		{"1", "2", "3"},
+		{"4", "5", "6"},
+	}
+	PrintTable(data, true)
+}
